@@ -10,7 +10,7 @@ using UniSA.UserTagger.Core.Logger;
 using UniSA.UserTagger.Core.Models;
 using UniSA.UserTagger.Core.Repository;
 
-namespace UniSA.UserTagger.Handlers
+namespace UniSA.UserTagger.Subscribers
 {
     public class ScholarshipTagHandler : BaseHandler, ISubscriber<TagUpdateEvent>
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniSA.UserTagger.Handlers
+namespace UniSA.UserTagger.Subscribers
 {
     public class BaseHandler
     {

@@ -9,7 +9,7 @@ using UniSA.UserTagger.Core.Events;
 using UniSA.UserTagger.Core.Interfaces;
 using UniSA.UserTagger.Core.Logger;
 using UniSA.UserTagger.PluginContexts;
-using UniSA.UserTagger.Handlers;
+using UniSA.UserTagger.Subscribers;
 
 namespace UniSA.UserTagger.Plugins
 {
