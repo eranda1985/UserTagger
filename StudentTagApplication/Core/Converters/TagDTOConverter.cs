@@ -13,6 +13,8 @@ namespace UniSA.UserTagger.Core.Converters
     {
         public void Convert(TagDTO source, out TagModel dest)
         {
+            // Add validation logic here for null checking 
+
             dest = new TagModel
             {
                 Id = source.Id,
