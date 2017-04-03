@@ -14,13 +14,6 @@ namespace UniSA.UserTagger.Core.Converters
 {
     public class TagDTOConverter : IConverter<TagDTO, TagModel>
     {
-        ILogger _logger;
-
-        public TagDTOConverter()
-        {
-            _logger = new AppLogger.Logger(GetType());
-        }
-
         public void Convert(TagDTO source, out TagModel dest)
         {
             // Add validation logic here for null checking 
