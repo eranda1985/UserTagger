@@ -28,7 +28,7 @@ namespace UniSA.UserTagger.ApiClientWorker
             _logger = new Logger(GetType());
         }
 
-        public async Task<PostTagResponse> ProcessAll(TagStructureDTO source)
+        public PostTagResponse ProcessAll(TagStructureDTO source)
         {
             TagStructureDTO dest = new TagStructureDTO();
             TagStructureDTO resultDTO;
@@ -39,7 +39,8 @@ namespace UniSA.UserTagger.ApiClientWorker
 
             foreach (var item in source.UidList)
             {
-                var destinationUser = await GetUserById(item, urbanAirshipClient);
+                var destinationUser = GetUserById(item, urbanAirshipClient);
+
                 _namedUserConverter.Convert(destinationUser, out resultDTO);
 
                 if (resultDTO == null || (resultDTO.UidList.Count == 0))
@@ -56,13 +57,13 @@ namespace UniSA.UserTagger.ApiClientWorker
                 dest.TagGroups = source.TagGroups;
                 string jsonstring;
                 _addTagRequestConverter.Convert(dest, out jsonstring);
-                //return PostTagToNamedUsers(jsonstring, urbanAirshipClient);
+                return PostTagToNamedUsers(jsonstring, urbanAirshipClient);
             }
 
             return new PostTagResponse { IsActionCompleted = true};
         }
 
-        public async Task<NamedUserDeserializer> GetUserById(string id, IApiClient urbanAirshipClient)
+        public NamedUserDeserializer GetUserById(string id, IApiClient urbanAirshipClient)
         {
             // Get a single named user by Id
             var requestObject = urbanAirshipClient.CreateRequest(() =>
@@ -72,9 +73,18 @@ namespace UniSA.UserTagger.ApiClientWorker
                 return request;
             });
 
-            var apiResult = await urbanAirshipClient.RunAsync<NamedUserDeserializer>(requestObject);
-            return apiResult;
-            
+            var apiResult = urbanAirshipClient.RunAsync<NamedUserDeserializer>(requestObject);
+
+            if (apiResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                _logger.Debug(string.Format("Data retrieved for student {0} from API.", id));
+                return apiResult.Data;
+            }
+            else
+            {
+                _logger.Error(string.Format("Error calling API {0}", apiResult.StatusCode + " " + apiResult.Content));
+                return null;
+            }
         }
 
         public bool NoDuplicateTagsInDestinationUser(TagStructureDTO source, TagStructureDTO dest)
@@ -91,7 +101,7 @@ namespace UniSA.UserTagger.ApiClientWorker
             return false;
         }
 
-        public async Task<PostTagResponse> PostTagToNamedUsers(string requestBody, IApiClient urbanAirshipClient)
+        public PostTagResponse PostTagToNamedUsers(string requestBody, IApiClient urbanAirshipClient)
         {
             //Call the API to add Tags
             var requestObject = urbanAirshipClient.CreateRequest(() =>
@@ -102,24 +112,24 @@ namespace UniSA.UserTagger.ApiClientWorker
                 return request;
             });
 
-            var apiResult = await urbanAirshipClient.RunAsync<NamedUserDeserializer>(requestObject);
+            var apiResult = urbanAirshipClient.RunAsync<NamedUserDeserializer>(requestObject);
 
             var response = new PostTagResponse();
 
-            //if (apiResult.StatusCode == System.Net.HttpStatusCode.OK)
-            //{
-            //    _logger.Debug(string.Format("Successfully added tag {0} from API.", _tagName));
-            //    response.IsSuccess = true;
-            //    response.IsActionCompleted = true;
-            //    response.OriginalAPIResponse = apiResult.Content;
-            //}
-            //else
-            //{
-            //    _logger.Error(string.Format("Error calling API {0}", apiResult.StatusCode + " " + apiResult.Content));
-            //    response.IsSuccess = false;
-            //    response.IsActionCompleted = true;
-            //    response.OriginalAPIResponse = apiResult.Content;
-            //}
+            if (apiResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                _logger.Debug(string.Format("Successfully added tag {0} from API.", _tagName));
+                response.IsSuccess = true;
+                response.IsActionCompleted = true;
+                response.OriginalAPIResponse = apiResult.Content;
+            }
+            else
+            {
+                _logger.Error(string.Format("Error calling API {0}", apiResult.StatusCode + " " + apiResult.Content));
+                response.IsSuccess = false;
+                response.IsActionCompleted = true;
+                response.OriginalAPIResponse = apiResult.Content;
+            }
             return response;
         }
     }

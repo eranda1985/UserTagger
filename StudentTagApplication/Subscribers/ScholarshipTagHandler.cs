@@ -23,7 +23,7 @@ namespace UniSA.UserTagger.Subscribers
 
         public void Subscribe(TagUpdateEvent args)
         {
-            args.Subscribe(async incomingTag =>
+            args.Subscribe(incomingTag =>
             {
                 if(tagName == incomingTag.Name)
                 {
@@ -48,9 +48,12 @@ namespace UniSA.UserTagger.Subscribers
                             source.TagGroups.Add(tagGroupName, new List<string> { incomingTag.Name });
 
                         // Call the worker to process payload. 
-                        var res = await _worker.ProcessAll(source);
+                        var res = _worker.ProcessAll(source);
 
-                        string d = "";
+                        if (res.IsActionCompleted && res.IsSuccess && res.OriginalAPIResponse != null)
+                        {
+                            //Update the tag status in tag registry 
+                        }
                     }
 
                     else if(incomingTag.IsNew && (!incomingTag.IsInstall))

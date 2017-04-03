@@ -44,7 +44,7 @@ namespace UniSA.UserTagger.Core.Components
         }
 
         // TODO: Try to make this async 
-        Task<T> IApiClient.RunAsync<T>(IRestRequest request)
+        IRestResponse<T> IApiClient.RunAsync<T>(IRestRequest request)
         {
             if (request == null)
                 throw new Exception("Uri request cannot be empty");
@@ -54,23 +54,8 @@ namespace UniSA.UserTagger.Core.Components
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/vnd.urbanairship+json; version=3");
 
-            var t = _client.ExecuteAsync<T>(request, (response) => 
-            {
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    _logger.Debug(string.Format("Data retrieved for student {0} from API."));
-                    taskCompletionSource.SetResult(response.Data);
-                }
-                else
-                {
-                    _logger.Error(string.Format("Error calling API {0}", response.StatusCode + " " + response.Content));
-                }
-                
-            });
+            return _client.Execute<T>(request);
 
-            //t.Wait();
-
-            return taskCompletionSource.Task;
         }
     }
 }

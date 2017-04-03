@@ -11,7 +11,7 @@ namespace UniSA.UserTagger.Core.Interfaces
     public interface IApiClient
     {
         string UriPath { get; set; }
-        Task<T> RunAsync<T>(IRestRequest request) where T: new();
+        IRestResponse<T> RunAsync<T>(IRestRequest request) where T: new();
 
         IRestRequest CreateRequest(Func<IRestRequest> t);
     }
