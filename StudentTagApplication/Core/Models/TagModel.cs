@@ -24,7 +24,7 @@ namespace UniSA.UserTagger.Core.Models
         public List<TagGroupModel> TagGroupList { get; set; }
 
         [Column("TagGroup")]
-        public int TagGroup { get; set; }
+        public int TagGroupId { get; set; }
 
         [Column("CreatedDate")]
         public DateTime CreatedDate { get; set; }

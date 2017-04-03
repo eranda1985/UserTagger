@@ -10,17 +10,20 @@ namespace UniSA.UserTagger.PluginContexts
     public class PluginContext : IPluginContext
     {
         IConverter<TagModel, TagDTO> _tagModelConverter;
+        IConverter<TagDTO, TagModel> _tagDTOConverter;
         IConverter<NamedUserDeserializer, TagStructureDTO> _namedUserConverter;
         IEventAggregatorBase _eventAggregator;
         IUrbanAirshipClientWorker _apiClientWorker;
 
         public PluginContext(
             IConverter<TagModel, TagDTO> tagModelConverter,
+            IConverter<TagDTO, TagModel> tagDTOConverter,
             IConverter<NamedUserDeserializer, TagStructureDTO> namedUserConverter,
             IEventAggregatorBase eventAggregator,
             IUrbanAirshipClientWorker worker)
         {
             _tagModelConverter = tagModelConverter;
+            _tagDTOConverter = tagDTOConverter;
             _namedUserConverter = namedUserConverter;
             _eventAggregator = eventAggregator;
             _apiClientWorker = worker;
@@ -88,6 +91,19 @@ namespace UniSA.UserTagger.PluginContexts
             set
             {
                 _apiClientWorker = value;
+            }
+        }
+
+        public IConverter<TagDTO, TagModel> TagDTOConverter
+        {
+            get
+            {
+                return _tagDTOConverter;
+            }
+
+            set
+            {
+                _tagDTOConverter = value;
             }
         }
     }

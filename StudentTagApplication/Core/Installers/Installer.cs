@@ -26,6 +26,7 @@ namespace UniSA.UserTagger.Core.Installers
                 .RegisterType<IConverter<TagModel, TagDTO>, TagModelConverter>(new TransientLifetimeManager())
                 .RegisterType<IConverter<NamedUserDeserializer, TagStructureDTO>, NamedUserResponseConverter>(new TransientLifetimeManager())
                 .RegisterType<IConverter<TagStructureDTO, string>, AddTagRequestConverter>(new TransientLifetimeManager())
+                .RegisterType<IConverter<TagDTO, TagModel>, TagDTOConverter>(new TransientLifetimeManager())
 
                 // Register plugin contexts
                 .RegisterType<IPluginContext, PluginContext>(new ContainerControlledLifetimeManager())

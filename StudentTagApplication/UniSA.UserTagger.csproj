@@ -90,6 +90,7 @@
     <Compile Include="Core\Constants\ConnectionStrings.cs" />
     <Compile Include="Core\Converters\AddTagRequestConverter.cs" />
     <Compile Include="Core\Converters\NamedUserResponseConverter.cs" />
+    <Compile Include="Core\Converters\TagDTOConverter.cs" />
     <Compile Include="Core\Converters\TagModelConverter.cs" />
     <Compile Include="Core\DTO\TagDTO.cs" />
     <Compile Include="Core\DTO\TagGroupDTO.cs" />

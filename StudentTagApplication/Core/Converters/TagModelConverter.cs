@@ -19,6 +19,8 @@ namespace UniSA.UserTagger.Core.Converters
                 IsInstall = source.InstallStatus,
                 IsNew = source.IsNew,
                 Name = source.TagName,
+                ModifiedDate = source.ModifiedDate,
+                CreatedDate = source.CreatedDate,
                 TagGroup = source.TagGroupList.Select(s => new TagGroupDTO { Id = s.Id, Name = s.Name}).ToList()
             };
         }

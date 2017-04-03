@@ -13,5 +13,7 @@ namespace UniSA.UserTagger.Core.DTO
         public bool IsInstall { get; set; }
         public bool IsNew { get; set; }
         public List<TagGroupDTO> TagGroup { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
