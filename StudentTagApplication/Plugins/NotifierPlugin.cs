@@ -70,7 +70,7 @@ namespace UniSA.UserTagger.Plugins
 
                 using (var repo = new TagRepository())
                 {
-                    var list = repo.List("select t.* from Tags t");
+                    var list = repo.List("select t.* , g.* from Tags t inner join TagGroups g on t.TagGroup = g.Id where t.IsNew = 1");
 
                     // Convert to DTO's 
                     foreach (var l in list)
