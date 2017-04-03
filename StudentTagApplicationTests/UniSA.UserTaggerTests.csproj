@@ -106,6 +106,7 @@
     <Compile Include="Converters\AddTagRequestConverterTest.cs" />
     <Compile Include="Converters\NamedUserResponseCoverterTest.cs" />
     <Compile Include="Converters\TagDTOConverterTest.cs" />
+    <Compile Include="Converters\TagModelConverterTest.cs" />
     <Compile Include="Repository\TagRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

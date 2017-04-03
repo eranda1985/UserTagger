@@ -128,10 +128,10 @@
     <Compile Include="Publishers\BaseTagUpdatePublisher.cs" />
     <Compile Include="Publishers\Notifier.cs" />
     <Compile Include="Core\Repository\DBContext.cs" />
-    <Compile Include="Subscribers\BaseHandler.cs" />
-    <Compile Include="Subscribers\Dispatcher.cs" />
-    <Compile Include="Subscribers\ScholarshipTagHandler.cs" />
-    <Compile Include="Subscribers\TestTagHandler.cs" />
+    <Compile Include="Handlers\BaseHandler.cs" />
+    <Compile Include="Handlers\Dispatcher.cs" />
+    <Compile Include="Handlers\ScholarshipTagHandler.cs" />
+    <Compile Include="Handlers\TestTagHandler.cs" />
     <Compile Include="Core\Components\UrbanAirshipAPIClient.cs" />
     <Compile Include="Core\Converters\StudentDTOConverter.cs" />
     <Compile Include="Core\DTO\TagStructureDTO.cs" />

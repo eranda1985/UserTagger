@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniSA.UserTagger.Subscribers
+namespace UniSA.UserTagger.Handlers
 {
     public class TestTagHandler : BaseHandler, ISubscriber<TagUpdateEvent>
     {

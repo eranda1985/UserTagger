@@ -2,7 +2,7 @@
 using UniSA.UserTagger.Core.Events;
 using UniSA.UserTagger.Core.Interfaces;
 using UniSA.UserTagger.PluginContexts;
-using UniSA.UserTagger.Subscribers;
+using UniSA.UserTagger.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
