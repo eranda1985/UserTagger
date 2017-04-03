@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UniSA.UserTagger</RootNamespace>
     <AssemblyName>UniSA.UserTagger</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Api.Core">
+      <HintPath>..\Libs\Api.Core.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -117,6 +121,7 @@
     <Compile Include="ApiClientWorker\Serializers\UserTagModifySerializer.cs" />
     <Compile Include="Core\Repository\ScholarshipUserRepository.cs" />
     <Compile Include="Core\Repository\TagGroupRepository.cs" />
+    <Compile Include="Core\Validators\UserTaggerValidator.cs" />
     <Compile Include="PluginComponents\PluginElement.cs" />
     <Compile Include="PluginComponents\PluginElementCollection.cs" />
     <Compile Include="PluginComponents\PluginSection.cs" />

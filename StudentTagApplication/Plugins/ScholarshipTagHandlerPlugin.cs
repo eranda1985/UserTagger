@@ -69,7 +69,14 @@ namespace UniSA.UserTagger.Plugins
 
                 var handler = new ScholarshipTagHandler(_tagName, pluginContext.ApiClientWorker, pluginContext.TagDTOConverter);
 
-                handler.Subscribe(registeredEvent);
+                try
+                {
+                    handler.Subscribe(registeredEvent);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex.ToString());
+                }
             }
         }
     }

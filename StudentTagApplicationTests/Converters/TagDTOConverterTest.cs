@@ -34,7 +34,7 @@ namespace StudentTagApplicationTests.Converters
                 IsNew = false,
                 CreatedDate = DateTime.Now.AddDays(-1),
                 ModifiedDate = DateTime.Now,
-                TagGroup = new List<TagGroupDTO> { new TagGroupDTO { Id = 11, Name = "TagGroup" } }
+                TagGroup = new List<TagGroupDTO> { new TagGroupDTO { Id = 11, Name="tagGroup1"} }
             };
             TagModel model = new TagModel();
 

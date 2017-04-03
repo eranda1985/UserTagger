@@ -64,27 +64,34 @@ namespace UniSA.UserTagger.Plugins
             // get new Tags from DB
             List<TagDTO> result = new List<TagDTO>();
 
-            _logger.Debug("Retrieving Tags from Database..");
-
-            using (var repo = new TagRepository())
+            try
             {
-                var list = repo.List("select t.* , g.* from Tags t inner join TagGroups g on t.TagGroup = g.Id where t.IsNew = 1");
+                _logger.Debug("Retrieving Tags from Database..");
 
-                // Convert to DTO's 
-                foreach (var l in list)
+                using (var repo = new TagRepository())
                 {
-                    var tempDto = new TagDTO();
-                    pluginContext.TagModelConverter.Convert(l, out tempDto);
-                    result.Add(tempDto);
+                    var list = repo.List("select t.* from Tags t");
+
+                    // Convert to DTO's 
+                    foreach (var l in list)
+                    {
+                        var tempDto = new TagDTO();
+                        pluginContext.TagModelConverter.Convert(l, out tempDto);
+                        result.Add(tempDto);
+                    }
                 }
+
+                _logger.Debug("Tags Retrieved and preparing to publish..");
+
+                // Publish with DTO's as the payload 
+                notifier.Publish(addTagEventInstance, result);
+
+                _logger.Debug("Tags Published");
             }
-
-            _logger.Debug("Tags Retrieved and preparing to publish..");
-
-            // Publish with DTO's as the payload 
-            notifier.Publish(addTagEventInstance, result);
-
-            _logger.Debug("Tags Published");
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+            }
         }
     }
 }

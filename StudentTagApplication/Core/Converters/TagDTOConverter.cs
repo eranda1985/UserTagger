@@ -6,14 +6,25 @@ using System.Threading.Tasks;
 using UniSA.UserTagger.Core.DTO;
 using UniSA.UserTagger.Core.Interfaces;
 using UniSA.UserTagger.Core.Models;
+using UniSA.UserTagger.Core.Validators;
+
+using AppLogger = UniSA.UserTagger.Core.Logger;
 
 namespace UniSA.UserTagger.Core.Converters
 {
     public class TagDTOConverter : IConverter<TagDTO, TagModel>
     {
+        ILogger _logger;
+
+        public TagDTOConverter()
+        {
+            _logger = new AppLogger.Logger(GetType());
+        }
+
         public void Convert(TagDTO source, out TagModel dest)
         {
             // Add validation logic here for null checking 
+            UserTaggerValidator.CheckNull(source.TagGroup, "TagGroups");
 
             dest = new TagModel
             {

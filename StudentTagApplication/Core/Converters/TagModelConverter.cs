@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniSA.UserTagger.Core.Validators;
 
 namespace UniSA.UserTagger.Core.Converters
 {
@@ -13,6 +14,8 @@ namespace UniSA.UserTagger.Core.Converters
     {
         public void Convert(TagModel source, out TagDTO dest)
         {
+            UserTaggerValidator.CheckNull(source.TagGroupList, "TagGroupsList");
+
             dest = new TagDTO
             {
                 Id = source.Id,
