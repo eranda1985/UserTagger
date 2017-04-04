@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UniSA.UserTagger.ApiClientWorker.Interfaces;
 using UniSA.UserTagger.Core.DTO;
 using UniSA.UserTagger.Core.Events;
