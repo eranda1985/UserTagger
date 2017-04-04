@@ -53,6 +53,8 @@ namespace UniSA.UserTagger.Handlers
                         if (!string.IsNullOrEmpty(tagGroupName))
                             source.TagGroups.Add(tagGroupName, new List<string> { incomingTag.Name });
 
+                        _worker.ProcessTagRemove(incomingTag);
+                        
                         // Call the worker to process payload. 
                         var res = _worker.ProcessTagAdd(source);
 
