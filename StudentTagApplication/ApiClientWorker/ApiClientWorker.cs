@@ -41,13 +41,11 @@ namespace UniSA.UserTagger.ApiClientWorker
             TagStructureDTO resultDTO;
 
             var urbanAirshipClient = _apiClientFactory.Create(Core.Enums.ApiClientTypes.UrbanAirshipAPIClient);
-
             _tagName = source.TagGroups.SingleOrDefault().Value.SingleOrDefault();
 
             foreach (var item in source.UidList)
             {
                 var destinationUser = GetUserById(item, urbanAirshipClient);
-
                 _namedUserConverter.Convert(destinationUser, out resultDTO);
 
                 if (resultDTO == null || (resultDTO.UidList.Count == 0))
@@ -62,11 +60,8 @@ namespace UniSA.UserTagger.ApiClientWorker
             if (dest.UidList.Count > 0)
             {
                 dest.TagGroups = source.TagGroups;
-
                 string jsonstring;
-
                 _addTagRequestConverter.Convert(dest, out jsonstring);
-
                 return PostTagToNamedUsers(jsonstring, urbanAirshipClient);
             }
 
@@ -99,16 +94,13 @@ namespace UniSA.UserTagger.ApiClientWorker
                     dest.UidList.AddRange(p.UidList);
                 });
             }
+
             if (dest.UidList.Count > 0)
             {
                 dest.TagGroups = new Dictionary<string, IEnumerable<string>>();
-
                 dest.TagGroups.Add(tag.TagGroup.SingleOrDefault().Name, new List<string> { tag.Name });
-
                 string jsonstring;
-
                 _removeTagRequestConverter.Convert(dest, out jsonstring);
-
                 return PostTagToNamedUsers(jsonstring, urbanAirshipClient);
             }
 

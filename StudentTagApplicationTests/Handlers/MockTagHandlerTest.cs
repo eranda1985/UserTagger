@@ -114,6 +114,8 @@ namespace StudentTagApplicationTests.Handlers
                         {
                             var result = repo.List("select u.UId from ScholarshipUserDetail u");
 
+                            Assert.AreEqual(2, result.Count);
+
                             source.UidList.AddRange(result.Select(x => x.UserId));
                         }
 
