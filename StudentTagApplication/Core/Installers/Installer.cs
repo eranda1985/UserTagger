@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
+using System.Collections.Generic;
 using UniSA.UserTagger.ApiClientWorker;
 using UniSA.UserTagger.ApiClientWorker.Deserializers;
 using UniSA.UserTagger.ApiClientWorker.Interfaces;
@@ -25,8 +26,11 @@ namespace UniSA.UserTagger.Core.Installers
                 // Register converters 
                 .RegisterType<IConverter<TagModel, TagDTO>, TagModelConverter>(new TransientLifetimeManager())
                 .RegisterType<IConverter<NamedUserDeserializer, TagStructureDTO>, NamedUserResponseConverter>(new TransientLifetimeManager())
-                .RegisterType<IConverter<TagStructureDTO, string>, AddTagRequestConverter>(new TransientLifetimeManager())
+                .RegisterType<IConverter<NamedUsersDeserializer, List<TagStructureDTO>>, NamedUsersResponseConverter> (new TransientLifetimeManager())
+                .RegisterType<IConverter<TagStructureDTO, string>, PostTagRequestConverter> (new TransientLifetimeManager())
                 .RegisterType<IConverter<TagDTO, TagModel>, TagDTOConverter>(new TransientLifetimeManager())
+                .RegisterType<AddTagRequestConverter>(new TransientLifetimeManager())
+                .RegisterType<RemoveTagRequestConverter>(new TransientLifetimeManager())
 
                 // Register plugin contexts
                 .RegisterType<IPluginContext, PluginContext>(new ContainerControlledLifetimeManager())

@@ -16,11 +16,20 @@ namespace UniSA.UserTagger.Handlers
         }
         public void Subscribe(TagUpdateEvent args)
         {
-            args.Subscribe(x =>
+            args.Subscribe(incomingTag =>
             {
-                if(tagName == x.Name)
+                if (tagName == incomingTag.Name)
                 {
                     // Do stuff related to this tag
+                    if (incomingTag.IsNew && incomingTag.IsInstall)
+                    {
+                        // Add tag logic
+                    }
+
+                    else if (incomingTag.IsNew && (!incomingTag.IsInstall))
+                    {
+                        // Logic for Remove tag
+                    }
                 }
             });
         }

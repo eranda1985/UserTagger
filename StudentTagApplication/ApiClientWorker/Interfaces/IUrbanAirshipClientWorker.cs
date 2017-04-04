@@ -13,7 +13,8 @@ namespace UniSA.UserTagger.ApiClientWorker.Interfaces
     {
         NamedUserDeserializer GetUserById(string id, IApiClient urbanAirshipClient);
         PostTagResponse PostTagToNamedUsers(string requestBody, IApiClient urbanAirshipClient);
-        PostTagResponse ProcessAll(TagStructureDTO source);
+        PostTagResponse ProcessTagAdd(TagStructureDTO source);
+        PostTagResponse ProcessTagRemove(TagDTO tag);
         bool NoDuplicateTagsInDestinationUser(TagStructureDTO source, TagStructureDTO dest);
     }
 }

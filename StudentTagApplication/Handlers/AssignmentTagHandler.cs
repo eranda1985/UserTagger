@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using UniSA.UserTagger.ApiClientWorker.Interfaces;
 using UniSA.UserTagger.Core.DTO;
@@ -12,15 +13,15 @@ using UniSA.UserTagger.Core.Repository;
 
 namespace UniSA.UserTagger.Handlers
 {
-    public class ScholarshipTagHandler : BaseHandler, ISubscriber<TagUpdateEvent>
+    public class AssignmentTagHandler : BaseHandler, ISubscriber<TagUpdateEvent>
     {
         private Logger _logger;
         private IUrbanAirshipClientWorker _worker;
         private IConverter<TagDTO, TagModel> _tagDTOConverter;
 
-        public ScholarshipTagHandler(
-            string tagName, 
-            IUrbanAirshipClientWorker worker, 
+        public AssignmentTagHandler(
+            string tagName,
+            IUrbanAirshipClientWorker worker,
             IConverter<TagDTO, TagModel> tagDTOConverter) : base(tagName)
         {
             _logger = new Logger(GetType());
@@ -32,13 +33,14 @@ namespace UniSA.UserTagger.Handlers
         {
             args.Subscribe(incomingTag =>
             {
-                if(tagName == incomingTag.Name)
+                if (tagName == incomingTag.Name)
                 {
+                    // Do stuff related to this tag
                     _logger.Debug(string.Format("Entering {0} tag handler logic", tagName));
 
                     if (incomingTag.IsNew && incomingTag.IsInstall)
                     {
-                        #region Logic for Add tag
+                        // Add tag logic
                         TagStructureDTO source = new TagStructureDTO();
 
                         // Get the relevant Uids
@@ -68,13 +70,13 @@ namespace UniSA.UserTagger.Handlers
                                 _tagDTOConverter.Convert(incomingTag, out entry);
                                 repo.Update(entry);
                             }
-                        } 
-                        #endregion
+                        }
                     }
 
-                    else if(incomingTag.IsNew && (!incomingTag.IsInstall))
+                    else if (incomingTag.IsNew && (!incomingTag.IsInstall))
                     {
                         // Logic for Remove tag
+                        _worker.ProcessTagRemove(incomingTag);
                     }
                 }
             });

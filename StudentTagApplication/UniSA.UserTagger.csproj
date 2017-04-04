@@ -88,12 +88,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClientWorker\ApiClientWorker.cs" />
+    <Compile Include="ApiClientWorker\Deserializers\NamedUsers.cs" />
+    <Compile Include="ApiClientWorker\Deserializers\NamedUsersDeserializer.cs" />
+    <Compile Include="ApiClientWorker\Interfaces\ISerializer.cs" />
     <Compile Include="ApiClientWorker\Interfaces\IUrbanAirshipClientWorker.cs" />
     <Compile Include="ApiClientWorker\PostTagResponse.cs" />
     <Compile Include="Core\Components\EventAggregator.cs" />
     <Compile Include="Core\Constants\ConnectionStrings.cs" />
     <Compile Include="Core\Converters\AddTagRequestConverter.cs" />
     <Compile Include="Core\Converters\NamedUserResponseConverter.cs" />
+    <Compile Include="Core\Converters\NamedUsersResponseConverter.cs" />
+    <Compile Include="Core\Converters\PostTagDecorator.cs" />
+    <Compile Include="Core\Converters\PostTagRequestConverter.cs" />
+    <Compile Include="Core\Converters\RemoveTagRequestConverter.cs" />
     <Compile Include="Core\Converters\TagDTOConverter.cs" />
     <Compile Include="Core\Converters\TagModelConverter.cs" />
     <Compile Include="Core\DTO\TagDTO.cs" />
@@ -118,13 +125,15 @@
     <Compile Include="ApiClientWorker\Serializers\AddTagGroups.cs" />
     <Compile Include="ApiClientWorker\Serializers\Audience.cs" />
     <Compile Include="ApiClientWorker\Serializers\UserTagAddSerializers.cs" />
-    <Compile Include="ApiClientWorker\Serializers\UserTagModifySerializer.cs" />
+    <Compile Include="ApiClientWorker\Serializers\UserTagRemoveSerializer.cs" />
     <Compile Include="Core\Repository\ScholarshipUserRepository.cs" />
     <Compile Include="Core\Repository\TagGroupRepository.cs" />
     <Compile Include="Core\Validators\UserTaggerValidator.cs" />
+    <Compile Include="Handlers\AssignmentTagHandler.cs" />
     <Compile Include="PluginComponents\PluginElement.cs" />
     <Compile Include="PluginComponents\PluginElementCollection.cs" />
     <Compile Include="PluginComponents\PluginSection.cs" />
+    <Compile Include="Plugins\AssignmentTagHandlerPlugin.cs" />
     <Compile Include="Plugins\DispatcherPlugin.cs" />
     <Compile Include="Plugins\MockPlugin.cs" />
     <Compile Include="Plugins\NotifierPlugin.cs" />
@@ -153,7 +162,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Repository\TagRepository.cs" />
-    <Compile Include="Plugins\TagUpdatePlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

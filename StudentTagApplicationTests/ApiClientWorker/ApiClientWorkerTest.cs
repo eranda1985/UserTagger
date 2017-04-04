@@ -18,6 +18,7 @@ namespace UniSA.UserTaggerTests.ApiClientWorker
         private IApiClientFactory _apiClientfactory;
         private IUrbanAirshipClientWorker _worker;
         private IConverter<NamedUserDeserializer, TagStructureDTO> _namedUserConverter;
+        private IConverter<NamedUsersDeserializer, List<TagStructureDTO>> _namedUsersConverter;
         private IConverter<TagStructureDTO, string> _addTagRequestConverter;
         private TagStructureDTO existingUser;
 
@@ -25,7 +26,7 @@ namespace UniSA.UserTaggerTests.ApiClientWorker
         public void SetUp()
         {
             _apiClientfactory = new ApiClientFactory();
-            _worker = new ApiLib.UrbanAirshipClientWorker(_apiClientfactory, _namedUserConverter, _addTagRequestConverter);
+            _worker = new ApiLib.UrbanAirshipClientWorker(_apiClientfactory, _namedUserConverter, _namedUsersConverter, _addTagRequestConverter);
 
             existingUser = new TagStructureDTO();
             existingUser.UidList = new List<string> { "WELEY001" };
