@@ -51,10 +51,7 @@ namespace UniSA.UserTagger.ApiClientWorker
                 if (resultDTO == null || (resultDTO.UidList.Count == 0))
                     continue;
 
-                if (NoDuplicateTagsInDestinationUser(source, resultDTO))
-                {
-                    dest.UidList.Add(resultDTO.UidList.SingleOrDefault());
-                }
+                dest.UidList.Add(resultDTO.UidList.SingleOrDefault());
             }
 
             if (dest.UidList.Count > 0)
