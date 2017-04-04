@@ -1,14 +1,12 @@
-﻿using RestSharp;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Collections.Generic;
+using RestSharp;
 using UniSA.UserTagger.ApiClientWorker.Deserializers;
 using UniSA.UserTagger.ApiClientWorker.Interfaces;
+using UniSA.UserTagger.Core.Converters;
 using UniSA.UserTagger.Core.DTO;
 using UniSA.UserTagger.Core.Interfaces;
 using UniSA.UserTagger.Core.Logger;
-using System;
-using System.Collections.Generic;
-using UniSA.UserTagger.Core.Converters;
 
 namespace UniSA.UserTagger.ApiClientWorker
 {
