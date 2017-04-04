@@ -8,3 +8,7 @@ Please follow through these steps for each new tag.
 3. Then create necessary Repository classes to generate the relevant uid list for that tag.
 4. Then create a Handler plugin in Plugins folder. 
 5. Register the plugin in App.config file. 
+
+## Remove tags.
+To remove a tag from Urban Airship store please follow through these steps. 
+1. Update the tag record in Tags table with *ToInstall* as **false** and *IsNew* as **true**. 
