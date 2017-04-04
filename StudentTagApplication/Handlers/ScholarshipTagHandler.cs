@@ -74,7 +74,23 @@ namespace UniSA.UserTagger.Handlers
 
                     else if(incomingTag.IsNew && (!incomingTag.IsInstall))
                     {
+                        #region Logic for Remove tag
                         // Logic for Remove tag
+                        var res = _worker.ProcessTagRemove(incomingTag);
+
+                        if (res.IsActionCompleted && res.IsSuccess && res.OriginalAPIResponse != null)
+                        {
+                            //Update the tag status in tag registry 
+                            using (var repo = new TagRepository())
+                            {
+                                incomingTag.IsNew = false;
+                                incomingTag.ModifiedDate = DateTime.Now;
+                                TagModel entry = new TagModel();
+                                _tagDTOConverter.Convert(incomingTag, out entry);
+                                repo.Update(entry);
+                            }
+                        }
+                        #endregion
                     }
                 }
             });

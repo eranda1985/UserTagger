@@ -17,7 +17,8 @@ namespace UniSA.UserTagger.ApiClientWorker
         private IApiClientFactory _apiClientFactory;
         private IConverter<NamedUserDeserializer, TagStructureDTO> _namedUserConverter;
         private IConverter<NamedUsersDeserializer, List<TagStructureDTO>> _namedUsersConverter;
-        private IConverter<TagStructureDTO, string> _postTagRequestConverter;
+        private AddTagRequestConverter _addTagRequestConverter;
+        private RemoveTagRequestConverter _removeTagRequestConverter;
         private ILogger _logger;
         private string _tagName;
 
@@ -25,12 +26,14 @@ namespace UniSA.UserTagger.ApiClientWorker
             IApiClientFactory apiClientfactory, 
             IConverter<NamedUserDeserializer, TagStructureDTO> namedUserConverter,
             IConverter<NamedUsersDeserializer, List<TagStructureDTO>> namedUsersConverter,
-            IConverter<TagStructureDTO, string> postTagRequestConverter)
+            RemoveTagRequestConverter removeTagRequestConverter,
+            AddTagRequestConverter addTagRequestConverter)
         {
             _apiClientFactory = apiClientfactory;
             _namedUserConverter = namedUserConverter;
             _namedUsersConverter = namedUsersConverter;
-            _postTagRequestConverter = postTagRequestConverter;
+            _addTagRequestConverter = addTagRequestConverter;
+            _removeTagRequestConverter = removeTagRequestConverter;
             _logger = new Logger(GetType());
         }
 
@@ -64,14 +67,54 @@ namespace UniSA.UserTagger.ApiClientWorker
 
                 string jsonstring;
 
-                var addtagConverter = new AddTagRequestConverter((PostTagRequestConverter)_postTagRequestConverter);
-
-                addtagConverter.Convert(dest, out jsonstring);
+                _addTagRequestConverter.Convert(dest, out jsonstring);
 
                 return PostTagToNamedUsers(jsonstring, urbanAirshipClient);
             }
 
             return new PostTagResponse { IsActionCompleted = true};
+        }
+
+        public PostTagResponse ProcessTagRemove(TagDTO tag)
+        {
+            TagStructureDTO dest = new TagStructureDTO();
+            var urbanAirshipClient = _apiClientFactory.Create(Core.Enums.ApiClientTypes.UrbanAirshipAPIClient);
+            var allUsers = GetAllNamedUsers(urbanAirshipClient);
+
+            List<TagStructureDTO> resultDTOs = null;
+            _namedUsersConverter.Convert(allUsers, out resultDTOs);
+
+            if (resultDTOs == null || (resultDTOs.Count == 0))
+                return null;
+
+            var usersWithMatchingTag = resultDTOs
+                .Where(u => u.TagGroups
+                .Any(t => t.Key == tag.TagGroup.SingleOrDefault().Name))
+                .Where(q => q.TagGroups
+                .Any(o => o.Value
+                .Any(k => k == tag.Name))).ToList();
+
+            if (usersWithMatchingTag.Count > 0)
+            {
+                usersWithMatchingTag.ForEach(p =>
+                {
+                    dest.UidList.AddRange(p.UidList);
+                });
+            }
+            if (dest.UidList.Count > 0)
+            {
+                dest.TagGroups = new Dictionary<string, IEnumerable<string>>();
+
+                dest.TagGroups.Add(tag.TagGroup.SingleOrDefault().Name, new List<string> { tag.Name });
+
+                string jsonstring;
+
+                _removeTagRequestConverter.Convert(dest, out jsonstring);
+
+                return PostTagToNamedUsers(jsonstring, urbanAirshipClient);
+            }
+
+            return new PostTagResponse { IsActionCompleted = true };
         }
 
         public NamedUserDeserializer GetUserById(string id, IApiClient urbanAirshipClient)
@@ -94,6 +137,28 @@ namespace UniSA.UserTagger.ApiClientWorker
             else
             {
                 _logger.Error(string.Format("Error calling API api/named_users/id - {0}", apiResult.StatusCode + " " + apiResult.Content));
+                return null;
+            }
+        }
+
+        public NamedUsersDeserializer GetAllNamedUsers(IApiClient urbanAirshipClient)
+        {
+            // Get a single named user by Id
+            var requestObject = urbanAirshipClient.CreateRequest(() =>
+            {
+                var request = new RestRequest("api/named_users", Method.GET);
+                return request;
+            });
+
+            var apiResult = urbanAirshipClient.RunAsync<NamedUsersDeserializer>(requestObject);
+
+            if (apiResult.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return apiResult.Data;
+            }
+            else
+            {
+                _logger.Error(string.Format("Error calling API  api/named_users - {0}", apiResult.StatusCode + " " + apiResult.Content));
                 return null;
             }
         }
@@ -129,7 +194,7 @@ namespace UniSA.UserTagger.ApiClientWorker
 
             if (apiResult.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                _logger.Debug(string.Format("Successfully added tag {0} from API.", _tagName));
+                _logger.Debug(string.Format("Successfully posted tag {0} from API.", _tagName));
                 response.IsSuccess = true;
                 response.IsActionCompleted = true;
                 response.OriginalAPIResponse = apiResult.Content;
@@ -142,67 +207,6 @@ namespace UniSA.UserTagger.ApiClientWorker
                 response.OriginalAPIResponse = apiResult.Content;
             }
             return response;
-        }
-
-        public PostTagResponse ProcessTagRemove(TagDTO tag)
-        {
-            TagStructureDTO dest = new TagStructureDTO();
-            var urbanAirshipClient = _apiClientFactory.Create(Core.Enums.ApiClientTypes.UrbanAirshipAPIClient);
-            var allUsers = GetAllNamedUsers(urbanAirshipClient);
-
-            List<TagStructureDTO> resultDTOs = null;
-            _namedUsersConverter.Convert(allUsers, out resultDTOs);
-
-            if (resultDTOs == null || (resultDTOs.Count == 0))
-                return null;
-
-            var usersWithMatchingTag = resultDTOs
-                .Where(u => u.TagGroups
-                .Any(t => t.Key == tag.TagGroup.SingleOrDefault().Name))
-                .Where(q => q.TagGroups
-                .Any(o => o.Value
-                .Any(k => k == tag.Name))).ToList();
-
-            if (usersWithMatchingTag.Count > 0)
-            {
-                usersWithMatchingTag.ForEach(p =>
-                    {
-                        dest.UidList.AddRange(p.UidList);
-                    });
-            }
-            if (dest.UidList.Count > 0)
-            {
-                dest.TagGroups = new Dictionary<string, IEnumerable<string>>();
-                dest.TagGroups.Add(tag.TagGroup.SingleOrDefault().Name, new List<string> { tag.Name });
-                string jsonstring;
-                var removeTagConverter = _postTagRequestConverter as RemoveTagRequestConverter;
-                removeTagConverter.Convert(dest, out jsonstring);
-                return PostTagToNamedUsers(jsonstring, urbanAirshipClient);
-            }
-
-            return new PostTagResponse { IsActionCompleted = true };
-        }
-
-        public NamedUsersDeserializer GetAllNamedUsers(IApiClient urbanAirshipClient)
-        {
-            // Get a single named user by Id
-            var requestObject = urbanAirshipClient.CreateRequest(() =>
-            {
-                var request = new RestRequest("api/named_users", Method.GET);
-                return request;
-            });
-
-            var apiResult = urbanAirshipClient.RunAsync<NamedUsersDeserializer>(requestObject);
-
-            if (apiResult.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return apiResult.Data;
-            }
-            else
-            {
-                _logger.Error(string.Format("Error calling API  api/named_users - {0}", apiResult.StatusCode + " " + apiResult.Content));
-                return null;
-            }
         }
     }
 }

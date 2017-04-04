@@ -11,7 +11,7 @@ using UniSA.UserTagger.Core.Interfaces;
 namespace StudentTagApplicationTests.Converters
 {
     [TestFixture]
-    public class AddTagRequestConverterTest
+    public class RemoveTagRequestConverterTest
     {
         private IConverter<TagStructureDTO, string> _postTagRequestConverter;
 
@@ -22,7 +22,7 @@ namespace StudentTagApplicationTests.Converters
         }
 
         [Test]
-        public void Should_Convert_Add_Tag_Request_Successfully()
+        public void Should_Convert_Remove_Tag_Request_To_String_Successfully()
         {
             // Arrange
             TagStructureDTO tagRequest = new TagStructureDTO
@@ -30,12 +30,12 @@ namespace StudentTagApplicationTests.Converters
                 TagGroups = new Dictionary<string, IEnumerable<string>>(),
                 UidList = new List<string> { "userId1", "userId2" }
             };
-            tagRequest.TagGroups.Add("groupName", new List<string> { "tagName1"});
-            string expected = "{\"audience\":{\"named_user_id\":[\"userId1\",\"userId2\"]},\"add\":{\"groupName\":[\"tagName1\"]}}";
+            tagRequest.TagGroups.Add("groupName", new List<string> { "tagName1" });
+            string expected = "{\"audience\":{\"named_user_id\":[\"userId1\",\"userId2\"]},\"remove\":{\"groupName\":[\"tagName1\"]}}";
             string actual;
 
             // Act
-            var _addTagRequestConverter = new AddTagRequestConverter((PostTagRequestConverter)_postTagRequestConverter);
+            var _addTagRequestConverter = new RemoveTagRequestConverter((PostTagRequestConverter)_postTagRequestConverter);
             _addTagRequestConverter.Convert(tagRequest, out actual);
 
             // Assert

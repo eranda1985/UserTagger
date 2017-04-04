@@ -4,6 +4,7 @@ using RestSharp;
 using System.Collections.Generic;
 using UniSA.UserTagger.ApiClientWorker.Deserializers;
 using UniSA.UserTagger.ApiClientWorker.Interfaces;
+using UniSA.UserTagger.Core.Converters;
 using UniSA.UserTagger.Core.DTO;
 using UniSA.UserTagger.Core.Factory;
 using UniSA.UserTagger.Core.Interfaces;
@@ -20,13 +21,15 @@ namespace UniSA.UserTaggerTests.ApiClientWorker
         private IConverter<NamedUserDeserializer, TagStructureDTO> _namedUserConverter;
         private IConverter<NamedUsersDeserializer, List<TagStructureDTO>> _namedUsersConverter;
         private IConverter<TagStructureDTO, string> _addTagRequestConverter;
+        private RemoveTagRequestConverter removeTagRequestConverter;
+        private AddTagRequestConverter addTagRequestConverter;
         private TagStructureDTO existingUser;
 
         [SetUp]
         public void SetUp()
         {
             _apiClientfactory = new ApiClientFactory();
-            _worker = new ApiLib.UrbanAirshipClientWorker(_apiClientfactory, _namedUserConverter, _namedUsersConverter, _addTagRequestConverter);
+            _worker = new ApiLib.UrbanAirshipClientWorker(_apiClientfactory, _namedUserConverter, _namedUsersConverter, removeTagRequestConverter, addTagRequestConverter);
 
             existingUser = new TagStructureDTO();
             existingUser.UidList = new List<string> { "WELEY001" };
