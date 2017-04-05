@@ -61,6 +61,15 @@ namespace UniSA.UserTagger.Handlers
                         if (res.IsActionCompleted && res.IsSuccess && res.OriginalAPIResponse != null)
                         {
                             _logger.Debug(string.Format("Successfully added the tag - {0}", incomingTag.Name));
+
+                            //Update the tag modified date in tag registry 
+                            using (var repo = new TagRepository())
+                            {
+                                incomingTag.ModifiedDate = DateTime.Now;
+                                TagModel entry = new TagModel();
+                                _tagDTOConverter.Convert(incomingTag, out entry);
+                                repo.Update(entry);
+                            }
                         } 
                         #endregion
                     }
@@ -74,6 +83,15 @@ namespace UniSA.UserTagger.Handlers
                         if (res.IsActionCompleted && res.IsSuccess && res.OriginalAPIResponse != null)
                         {
                             _logger.Debug(string.Format("Successfully removed the tag - {0}", incomingTag.Name));
+
+                            //Update the tag modified date in tag registry 
+                            using (var repo = new TagRepository())
+                            {
+                                incomingTag.ModifiedDate = DateTime.Now;
+                                TagModel entry = new TagModel();
+                                _tagDTOConverter.Convert(incomingTag, out entry);
+                                repo.Update(entry);
+                            }
                         }
                         #endregion
                     }

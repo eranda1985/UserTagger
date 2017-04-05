@@ -135,7 +135,6 @@ namespace StudentTagApplicationTests.Handlers
                             //Update the tag status in tag registry 
                             using (var repo = new TagRepository())
                             {
-                                incomingTag.IsNew = false;
                                 incomingTag.ModifiedDate = DateTime.Now;
                                 TagModel entry = new TagModel();
                                 _tagDTOConverter.Convert(incomingTag, out entry);
@@ -158,7 +157,6 @@ namespace StudentTagApplicationTests.Handlers
                             //Update the tag status in tag registry 
                             using (var repo = new TagRepository())
                             {
-                                incomingTag.IsNew = false;
                                 incomingTag.ModifiedDate = DateTime.Now;
                                 TagModel entry = new TagModel();
                                 _tagDTOConverter.Convert(incomingTag, out entry);
