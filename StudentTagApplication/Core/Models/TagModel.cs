@@ -17,8 +17,11 @@ namespace UniSA.UserTagger.Core.Models
         [Column("ToInstall")]
         public bool InstallStatus { get; set; }
 
-        [Column("IsNew")]
-        public bool IsNew { get; set; }
+        [Column("IsActivated")]
+        public bool IsActivated { get; set; }
+
+        [Column("IsDeleted")]
+        public bool IsDeleted { get; set; }
 
         [Column("TagGroup")]
         public List<TagGroupModel> TagGroupList { get; set; }
