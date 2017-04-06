@@ -66,6 +66,7 @@ namespace UniSA.UserTagger.Handlers
                             using (var repo = new TagRepository())
                             {
                                 incomingTag.ModifiedDate = DateTime.Now;
+                                incomingTag.IsActivated = true;
                                 TagModel entry = new TagModel();
                                 _tagDTOConverter.Convert(incomingTag, out entry);
                                 repo.Update(entry);
@@ -88,6 +89,7 @@ namespace UniSA.UserTagger.Handlers
                             using (var repo = new TagRepository())
                             {
                                 incomingTag.ModifiedDate = DateTime.Now;
+                                incomingTag.IsActivated = true;
                                 TagModel entry = new TagModel();
                                 _tagDTOConverter.Convert(incomingTag, out entry);
                                 repo.Update(entry);
