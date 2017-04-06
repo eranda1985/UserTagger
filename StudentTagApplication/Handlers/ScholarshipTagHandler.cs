@@ -35,7 +35,7 @@ namespace UniSA.UserTagger.Handlers
                 {
                     _logger.Debug(string.Format("Entering {0} tag handler logic", tagName));
 
-                    if (!incomingTag.IsDeleted && incomingTag.IsInstall)
+                    if (incomingTag.IsInstall)
                     {
                         #region Logic for Add tag
                         TagStructureDTO source = new TagStructureDTO();
@@ -75,7 +75,7 @@ namespace UniSA.UserTagger.Handlers
                         #endregion
                     }
 
-                    else if(!incomingTag.IsDeleted && (!incomingTag.IsInstall))
+                    else if(!incomingTag.IsInstall)
                     {
                         #region Logic for Remove tag
                         // Logic for Remove tag

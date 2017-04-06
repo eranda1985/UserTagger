@@ -36,7 +36,7 @@ namespace UniSA.UserTagger.Handlers
                     // Do stuff related to this tag
                     _logger.Debug(string.Format("Entering {0} tag handler logic", tagName));
 
-                    if (!incomingTag.IsDeleted && incomingTag.IsInstall)
+                    if (incomingTag.IsInstall)
                     {
                         // Add tag logic
                         TagStructureDTO source = new TagStructureDTO();
@@ -75,7 +75,7 @@ namespace UniSA.UserTagger.Handlers
                         }
                     }
 
-                    else if (!incomingTag.IsDeleted && (!incomingTag.IsInstall))
+                    else if (!incomingTag.IsInstall)
                     {
                         // Logic for Remove tag
                         var res = _worker.ProcessTagRemove(incomingTag);
