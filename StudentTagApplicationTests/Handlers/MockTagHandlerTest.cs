@@ -44,8 +44,9 @@ namespace StudentTagApplicationTests.Handlers
         {
             TagDTO dto = new TagDTO
             {
-                IsNew =true,
+                IsDeleted =false,
                 IsInstall =true,
+                IsActivated = false,
                 Name = "tagName",
                 TagGroup = new List<TagGroupDTO>
                 {
@@ -66,8 +67,9 @@ namespace StudentTagApplicationTests.Handlers
         {
             TagDTO dto = new TagDTO
             {
-                IsNew = true,
+                IsDeleted = false,
                 IsInstall = false,
+                IsActivated = false,
                 Name = "tagName",
                 TagGroup = new List<TagGroupDTO>
                 {
@@ -104,7 +106,7 @@ namespace StudentTagApplicationTests.Handlers
             {
                 if (tagName == incomingTag.Name)
                 {
-                    if (incomingTag.IsNew && incomingTag.IsInstall)
+                    if (!incomingTag.IsDeleted && incomingTag.IsInstall)
                     {
                         #region Logic for Add tag
                         TagStructureDTO source = new TagStructureDTO();
@@ -144,7 +146,7 @@ namespace StudentTagApplicationTests.Handlers
                         #endregion
                     }
 
-                    else if (incomingTag.IsNew && (!incomingTag.IsInstall))
+                    else if (!incomingTag.IsDeleted && (!incomingTag.IsInstall))
                     {
                         #region Logic for Remove tag
                         // Logic for Remove tag

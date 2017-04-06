@@ -30,7 +30,8 @@ namespace StudentTagApplicationTests.Converters
             {
                 Id = 1,
                 InstallStatus = true,
-                IsNew = true,
+                IsDeleted = false,
+                IsActivated = false, 
                 TagName = "TestTagName",
                 TagGroupList = new List<TagGroupModel> { new TagGroupModel { Id = 1, Name = "tagGroup1" } },
                 CreatedDate = DateTime.Now.AddDays(-1),
@@ -44,7 +45,8 @@ namespace StudentTagApplicationTests.Converters
             // Assert
             Assert.AreEqual(model.Id, dto.Id);
             Assert.AreEqual(model.InstallStatus, dto.IsInstall);
-            Assert.AreEqual(model.IsNew, dto.IsNew);
+            Assert.AreEqual(model.IsDeleted, dto.IsDeleted);
+            Assert.AreEqual(model.IsActivated, dto.IsActivated);
             Assert.AreEqual(model.ModifiedDate, dto.ModifiedDate);
             Assert.AreEqual(model.TagGroupList.SingleOrDefault().Name, dto.TagGroup.SingleOrDefault().Name);
             Assert.AreEqual(model.TagGroupList.SingleOrDefault().Id, dto.TagGroup.SingleOrDefault().Id);

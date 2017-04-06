@@ -23,7 +23,8 @@ namespace UniSA.UserTagger.Core.Converters
             {
                 Id = source.Id,
                 InstallStatus = source.IsInstall,
-                IsNew = source.IsNew,
+                IsActivated = source.IsActivated,
+                IsDeleted = source.IsDeleted,
                 TagName = source.Name,
                 ModifiedDate = source.ModifiedDate,
                 CreatedDate = source.CreatedDate,

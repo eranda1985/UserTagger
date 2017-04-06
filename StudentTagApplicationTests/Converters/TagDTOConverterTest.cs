@@ -31,7 +31,8 @@ namespace StudentTagApplicationTests.Converters
                 Id = 1,
                 Name = "testTagName",
                 IsInstall = true,
-                IsNew = false,
+                IsDeleted = false,
+                IsActivated = false,
                 CreatedDate = DateTime.Now.AddDays(-1),
                 ModifiedDate = DateTime.Now,
                 TagGroup = new List<TagGroupDTO> { new TagGroupDTO { Id = 11, Name="tagGroup1"} }
@@ -45,7 +46,8 @@ namespace StudentTagApplicationTests.Converters
             Assert.AreEqual(dto.Id, model.Id);
             Assert.AreEqual(dto.Name, model.TagName);
             Assert.AreEqual(dto.IsInstall, model.InstallStatus);
-            Assert.AreEqual(dto.IsNew, model.IsNew);
+            Assert.AreEqual(dto.IsDeleted, model.IsDeleted);
+            Assert.AreEqual(dto.IsActivated, model.IsActivated);
             Assert.AreEqual(dto.ModifiedDate, model.ModifiedDate);
             Assert.AreEqual(dto.CreatedDate, model.CreatedDate);
             Assert.AreEqual(dto.TagGroup.Select(s => s.Name), model.TagGroupList.Select(s => s.Name));

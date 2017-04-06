@@ -21,12 +21,12 @@ namespace UniSA.UserTagger.Handlers
                 if (tagName == incomingTag.Name)
                 {
                     // Do stuff related to this tag
-                    if (incomingTag.IsNew && incomingTag.IsInstall)
+                    if (!incomingTag.IsDeleted && incomingTag.IsInstall)
                     {
                         // Add tag logic
                     }
 
-                    else if (incomingTag.IsNew && (!incomingTag.IsInstall))
+                    else if (!incomingTag.IsDeleted&& (!incomingTag.IsInstall))
                     {
                         // Logic for Remove tag
                     }

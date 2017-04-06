@@ -26,7 +26,7 @@ namespace UniSA.UserTaggerTests
         public void Should_Return_Tags_With_Groups_From_Repository()
         {
             var repo = new TagRepository();
-            var list = repo.List("select t.* , g.* from Tags t inner join TagGroups g on t.TagGroup = g.Id where t.IsNew = 1");
+            var list = repo.List("select t.* , g.* from Tags t inner join TagGroups g on t.TagGroup = g.Id where t.IsDeleted = 0");
             Assert.That(list.Count > 0);
         }
     }
