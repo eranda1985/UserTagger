@@ -44,7 +44,7 @@ namespace UniSA.UserTagger.Handlers
                         // Get the relevant Uids
                         using (var repo = new ScholarshipUserRepository())
                         {
-                            var result = repo.List("select u.UId from ScholarshipUserDetail u where u.FirstName = 'Eranda'");
+                            var result = repo.List("select u.UId from ScholarshipUserDetail u");
                             source.UidList.AddRange(result.Select(x => x.UserId));
                         }
 
