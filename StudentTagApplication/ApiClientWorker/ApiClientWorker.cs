@@ -45,7 +45,7 @@ namespace UniSA.UserTagger.ApiClientWorker
 
             foreach (var item in source.UidList)
             {
-                var destinationUser = GetUserById(item, urbanAirshipClient);
+                var destinationUser = GetUserById(item.ToUpper(), urbanAirshipClient);
                 _namedUserConverter.Convert(destinationUser, out resultDTO);
 
                 if (resultDTO == null || (resultDTO.UidList.Count == 0))
