@@ -9,6 +9,7 @@ namespace UniSA.UserTagger.ApiClientWorker.Deserializers
     public class NamedUsersDeserializer
     {
         public List<NamedUser> NamedUsers { get; set; }
+        public string NextPage { get; set; }
 
         public NamedUsersDeserializer()
         {

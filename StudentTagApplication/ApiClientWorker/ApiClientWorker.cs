@@ -69,10 +69,18 @@ namespace UniSA.UserTagger.ApiClientWorker
         {
             TagStructureDTO dest = new TagStructureDTO();
             var urbanAirshipClient = _apiClientFactory.Create(Core.Enums.ApiClientTypes.UrbanAirshipAPIClient);
+            var tempNamedUserResult = new NamedUsersDeserializer();
             var allUsers = GetAllNamedUsers(urbanAirshipClient);
+            tempNamedUserResult.NamedUsers.AddRange(allUsers.NamedUsers);
+
+            while (!string.IsNullOrEmpty(allUsers.NextPage))
+            {
+                allUsers = GetAllNamedUsers(urbanAirshipClient, allUsers.NextPage.Replace("https://go.urbanairship.com", ""));
+                tempNamedUserResult.NamedUsers.AddRange(allUsers.NamedUsers);
+            }
 
             List<TagStructureDTO> resultDTOs = null;
-            _namedUsersConverter.Convert(allUsers, out resultDTOs);
+            _namedUsersConverter.Convert(tempNamedUserResult, out resultDTOs);
 
             if (resultDTOs == null || (resultDTOs.Count == 0))
                 return null;
@@ -128,12 +136,13 @@ namespace UniSA.UserTagger.ApiClientWorker
             }
         }
 
-        public NamedUsersDeserializer GetAllNamedUsers(IApiClient urbanAirshipClient)
+        public NamedUsersDeserializer GetAllNamedUsers(IApiClient urbanAirshipClient, string url = null)
         {
             // Get a single named user by Id
             var requestObject = urbanAirshipClient.CreateRequest(() =>
             {
-                var request = new RestRequest("api/named_users", Method.GET);
+                var urlString = url ?? "api/named_users";
+                var request = new RestRequest(urlString, Method.GET);
                 return request;
             });
 
