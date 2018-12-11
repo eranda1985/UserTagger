@@ -23,7 +23,10 @@ namespace UniSA.UserTagger
                     var plugin = container.Resolve(type, type.Name) as IPlugin;
 
                     if (!string.IsNullOrEmpty(p.TagName))
+                    {
                         plugin.PropertyBag.Add("TagName", p.TagName);
+                        plugin.PropertyBag.Add("DBConnectionName", p.DBConnectionName);
+                    }
 
                     plugin.PerfromAction();
                 }

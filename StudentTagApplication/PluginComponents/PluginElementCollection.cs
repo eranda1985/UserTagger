@@ -44,7 +44,7 @@ namespace UniSA.UserTagger
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((PluginElement)element).Type;
+            return ((PluginElement)element).Id;
         }
     }
 }

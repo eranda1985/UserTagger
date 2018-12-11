@@ -45,7 +45,9 @@ namespace UniSA.UserTagger.Core.Installers
                 // Register plugins here
                 .RegisterType<DispatcherPlugin>(new TransientLifetimeManager())
                 .RegisterType<NotifierPlugin>(new TransientLifetimeManager())
-                .RegisterType<MockPlugin>(new TransientLifetimeManager());
+                .RegisterType<MockPlugin>(new TransientLifetimeManager())
+                .RegisterType<GenericTagHandlerPlugin>(new TransientLifetimeManager());
+
         }
 
     }

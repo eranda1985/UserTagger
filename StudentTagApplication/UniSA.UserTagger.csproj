@@ -118,6 +118,7 @@
     <Compile Include="ApiClientWorker\Deserializers\NamedUser.cs" />
     <Compile Include="ApiClientWorker\Deserializers\NamedUserDeserializer.cs" />
     <Compile Include="ApiClientWorker\Deserializers\TagGroup.cs" />
+    <Compile Include="Core\Models\GenericUserModel.cs" />
     <Compile Include="Core\Models\Mock.cs" />
     <Compile Include="Core\Models\ScholarshipUserModel.cs" />
     <Compile Include="Core\Models\TagGroupModel.cs" />
@@ -126,15 +127,18 @@
     <Compile Include="ApiClientWorker\Serializers\Audience.cs" />
     <Compile Include="ApiClientWorker\Serializers\UserTagAddSerializers.cs" />
     <Compile Include="ApiClientWorker\Serializers\UserTagRemoveSerializer.cs" />
+    <Compile Include="Core\Repository\GenericUserRepository.cs" />
     <Compile Include="Core\Repository\ScholarshipUserRepository.cs" />
     <Compile Include="Core\Repository\TagGroupRepository.cs" />
     <Compile Include="Core\Validators\UserTaggerValidator.cs" />
     <Compile Include="Handlers\AssignmentTagHandler.cs" />
+    <Compile Include="Handlers\GenericTagHandler.cs" />
     <Compile Include="PluginComponents\PluginElement.cs" />
     <Compile Include="PluginComponents\PluginElementCollection.cs" />
     <Compile Include="PluginComponents\PluginSection.cs" />
     <Compile Include="Plugins\AssignmentTagHandlerPlugin.cs" />
     <Compile Include="Plugins\DispatcherPlugin.cs" />
+    <Compile Include="Plugins\GenericTagHandlerPlugin.cs" />
     <Compile Include="Plugins\MockPlugin.cs" />
     <Compile Include="Plugins\NotifierPlugin.cs" />
     <Compile Include="Plugins\ScholarshipTagHandlerPlugin.cs" />

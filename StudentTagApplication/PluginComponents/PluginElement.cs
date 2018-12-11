@@ -13,6 +13,15 @@ namespace UniSA.UserTagger
             }
         }
 
+        [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
+        public string Id
+        {
+            get
+            {
+                return this["id"] as string;
+            }
+        }
+
         [ConfigurationProperty("test", IsRequired = false, IsKey = true)]
         public string Test
         {
@@ -39,6 +48,20 @@ namespace UniSA.UserTagger
             set
             {
                 this["tagName"] = value;
+            }
+        }
+
+        [ConfigurationProperty("dbConnectionName", IsRequired = false, IsKey = true)]
+        public string DBConnectionName
+        {
+            get
+            {
+                return this["dbConnectionName"] as string;
+            }
+
+            set
+            {
+                this["dbConnectionName"] = value;
             }
         }
     }
