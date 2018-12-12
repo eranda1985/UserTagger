@@ -14,19 +14,22 @@ namespace UniSA.UserTagger.PluginContexts
         IConverter<NamedUserDeserializer, TagStructureDTO> _namedUserConverter;
         IEventAggregatorBase _eventAggregator;
         IUrbanAirshipClientWorker _apiClientWorker;
+        IFileReaderFactory _fileReaderFactory;
 
         public PluginContext(
             IConverter<TagModel, TagDTO> tagModelConverter,
             IConverter<TagDTO, TagModel> tagDTOConverter,
             IConverter<NamedUserDeserializer, TagStructureDTO> namedUserConverter,
             IEventAggregatorBase eventAggregator,
-            IUrbanAirshipClientWorker worker)
+            IUrbanAirshipClientWorker worker,
+            IFileReaderFactory fileReaderFactory)
         {
             _tagModelConverter = tagModelConverter;
             _tagDTOConverter = tagDTOConverter;
             _namedUserConverter = namedUserConverter;
             _eventAggregator = eventAggregator;
             _apiClientWorker = worker;
+            _fileReaderFactory = fileReaderFactory;
         }
 
         public string TagFilePath
@@ -106,5 +109,7 @@ namespace UniSA.UserTagger.PluginContexts
                 _tagDTOConverter = value;
             }
         }
+
+        public IFileReaderFactory FileReaderFactory { get => _fileReaderFactory; }
     }
 }

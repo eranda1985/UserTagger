@@ -48,7 +48,15 @@ namespace UniSA.UserTagger.Plugins
 
                 var connString = _propertyBag.SingleOrDefault(p => p.Key == "DBConnectionName").Value as string;
 
-                var handler = new GenericTagHandler(_tagName, connString, pluginContext.ApiClientWorker, pluginContext.TagDTOConverter);
+                var filePath = _propertyBag.SingleOrDefault(p => p.Key == "FilePath").Value as string;
+
+                var handler = new GenericTagHandler(
+                    _tagName, 
+                    connString, 
+                    filePath, 
+                    pluginContext.ApiClientWorker, 
+                    pluginContext.TagDTOConverter, 
+                    pluginContext.FileReaderFactory);
 
                 handler.Subscribe(registeredEvent);
             }

@@ -26,8 +26,8 @@ namespace UniSA.UserTagger.Core.Installers
                 // Register converters 
                 .RegisterType<IConverter<TagModel, TagDTO>, TagModelConverter>(new TransientLifetimeManager())
                 .RegisterType<IConverter<NamedUserDeserializer, TagStructureDTO>, NamedUserResponseConverter>(new TransientLifetimeManager())
-                .RegisterType<IConverter<NamedUsersDeserializer, List<TagStructureDTO>>, NamedUsersResponseConverter> (new TransientLifetimeManager())
-                .RegisterType<IConverter<TagStructureDTO, string>, PostTagRequestConverter> (new TransientLifetimeManager())
+                .RegisterType<IConverter<NamedUsersDeserializer, List<TagStructureDTO>>, NamedUsersResponseConverter>(new TransientLifetimeManager())
+                .RegisterType<IConverter<TagStructureDTO, string>, PostTagRequestConverter>(new TransientLifetimeManager())
                 .RegisterType<IConverter<TagDTO, TagModel>, TagDTOConverter>(new TransientLifetimeManager())
                 .RegisterType<AddTagRequestConverter>(new TransientLifetimeManager())
                 .RegisterType<RemoveTagRequestConverter>(new TransientLifetimeManager())
@@ -41,6 +41,8 @@ namespace UniSA.UserTagger.Core.Installers
                 .RegisterType<IEventAggregatorBase, EventAggregator>(new ContainerControlledLifetimeManager())
 
                 .RegisterType<IUrbanAirshipClientWorker, UrbanAirshipClientWorker>(new TransientLifetimeManager())
+
+                .RegisterType<IFileReaderFactory, FileReaderFactory>(new TransientLifetimeManager())
 
                 // Register plugins here
                 .RegisterType<DispatcherPlugin>(new TransientLifetimeManager())

@@ -16,19 +16,25 @@ namespace UniSA.UserTagger.Handlers
     public class GenericTagHandler : BaseHandler, ISubscriber<TagUpdateEvent>
     {
         private string _connString;
+        private string _filePath;
         private Logger _logger;
         private IUrbanAirshipClientWorker _worker;
         private IConverter<TagDTO, TagModel> _tagDTOConverter;
+        private IFileReaderFactory _fileReaderFactory;
 
         public GenericTagHandler(string tagName, 
             string connString,
+            string filePath,
             IUrbanAirshipClientWorker worker,
-            IConverter<TagDTO, TagModel> tagDTOConverter) : base(tagName)
+            IConverter<TagDTO, TagModel> tagDTOConverter,
+            IFileReaderFactory fileReaderFactory) : base(tagName)
         {
             _connString = connString;
+            _filePath = filePath;
             _logger = new Logger(GetType());
             _worker = worker;
             _tagDTOConverter = tagDTOConverter;
+            _fileReaderFactory = fileReaderFactory;
         }
 
         public void Subscribe(TagUpdateEvent args)
@@ -46,7 +52,15 @@ namespace UniSA.UserTagger.Handlers
                         // Get the relevant Uids
                         using (var repo = new GenericUserRepository(_connString))
                         {
-                            var result = repo.List("select u.UId as Username from ScholarshipUserDetail u");
+                            var query = _fileReaderFactory.Create().ReadAll(_filePath);
+                            //var result = repo.List("select u.UId as Username from ScholarshipUserDetail u");
+                            if (string.IsNullOrEmpty(query))
+                            {
+                                _logger.Debug("Query is empty. Aborting tag association.");
+                                return;
+                            }
+
+                            var result = repo.List(query);
                             source.UidList.AddRange(result.Select(x => x.Username));
                         }
 

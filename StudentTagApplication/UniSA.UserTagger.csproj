@@ -94,6 +94,7 @@
     <Compile Include="ApiClientWorker\Interfaces\IUrbanAirshipClientWorker.cs" />
     <Compile Include="ApiClientWorker\PostTagResponse.cs" />
     <Compile Include="Core\Components\EventAggregator.cs" />
+    <Compile Include="Core\Components\FileStreamer.cs" />
     <Compile Include="Core\Constants\ConnectionStrings.cs" />
     <Compile Include="Core\Converters\AddTagRequestConverter.cs" />
     <Compile Include="Core\Converters\NamedUserResponseConverter.cs" />
@@ -110,7 +111,9 @@
     <Compile Include="Core\Events\CompositeListEvent.cs" />
     <Compile Include="Core\Events\TagUpdateEvent.cs" />
     <Compile Include="Core\Factory\ApiClientFactory.cs" />
+    <Compile Include="Core\Factory\FileReaderFactory.cs" />
     <Compile Include="Core\Interfaces\IEventAggregatorBase.cs" />
+    <Compile Include="Core\Interfaces\IFileReaderFactory.cs" />
     <Compile Include="Core\Interfaces\ILogger.cs" />
     <Compile Include="Core\Interfaces\IPublisher.cs" />
     <Compile Include="Core\Interfaces\ISubscriber.cs" />
@@ -177,6 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+    <Content Include="SQL\GetHDRStudents.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

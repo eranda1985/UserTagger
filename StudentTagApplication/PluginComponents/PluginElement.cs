@@ -64,5 +64,19 @@ namespace UniSA.UserTagger
                 this["dbConnectionName"] = value;
             }
         }
+
+        [ConfigurationProperty("filePath", IsRequired = false, IsKey = true)]
+        public string FilePath
+        {
+            get
+            {
+                return this["filePath"] as string;
+            }
+
+            set
+            {
+                this["filePath"] = value;
+            }
+        }
     }
 }

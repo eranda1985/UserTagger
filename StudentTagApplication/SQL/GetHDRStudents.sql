@@ -1,0 +1,1 @@
+﻿select u.UId as Username from ScholarshipUserDetail u

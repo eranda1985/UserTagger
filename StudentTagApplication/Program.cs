@@ -26,6 +26,7 @@ namespace UniSA.UserTagger
                     {
                         plugin.PropertyBag.Add("TagName", p.TagName);
                         plugin.PropertyBag.Add("DBConnectionName", p.DBConnectionName);
+                        plugin.PropertyBag.Add("FilePath", p.FilePath);
                     }
 
                     plugin.PerfromAction();
